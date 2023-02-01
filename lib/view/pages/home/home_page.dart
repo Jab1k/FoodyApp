@@ -13,6 +13,7 @@ import '../../components/akciya_builder.dart';
 import '../../components/cached_network_image.dart';
 import '../../components/popular_menu_builder.dart';
 import '../../components/restaurant_builder.dart';
+import 'all_cotegories.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -199,6 +200,32 @@ class _HomePageState extends State<HomePage> {
                           SizedBox(
                               height: 190.h, child: const RestaurantListview()),
                           32.verticalSpace,
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 24),
+                                child: Text('Popular Categories',
+                                    style: Style.textStyleRegular(
+                                        size: 20, textColor: Style.blackColor)),
+                              ),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 24),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                CategoryPage())));
+                                  },
+                                  child: Text('See all',
+                                      style: Style.textStyleRegular(
+                                          size: 16,
+                                          textColor: Style.primaryColor)),
+                                ),
+                              ),
+                            ],
+                          ),
                           Row(
                             children: [
                               Padding(

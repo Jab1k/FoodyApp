@@ -54,6 +54,7 @@ dependencies:
   google_sign_in: ^5.4.4
   flutter_facebook_login: ^3.0.0
   flutter_login_facebook: ^1.7.0
+  camera: ^0.10.3
 
 dev_dependencies:
   flutter_test:

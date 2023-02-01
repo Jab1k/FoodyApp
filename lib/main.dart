@@ -6,12 +6,14 @@ import 'package:provider/provider.dart';
 
 import 'controller/app_controller.dart';
 import 'controller/auth_controller.dart';
+import 'controller/home_controller.dart';
 import 'controller/product_controller.dart';
 import 'controller/user_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => AuthController()),
         ChangeNotifierProvider(create: (context) => UserController()),
         ChangeNotifierProvider(create: (context) => ProductController()),
+        ChangeNotifierProvider(create: (context) => HomeController()),
         ChangeNotifierProvider(create: (context) => AppController())
       ],
       child: ScreenUtilInit(

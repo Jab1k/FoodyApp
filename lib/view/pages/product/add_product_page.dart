@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,8 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+  bool isnotempty = true;
+
   final TextEditingController nameTextEditController = TextEditingController();
   final TextEditingController descTextEditController = TextEditingController();
   final TextEditingController priceTextEditController = TextEditingController();
@@ -43,11 +47,59 @@ class _AddProductPageState extends State<AddProductPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    context.watch<ProductController>().imagePath.isEmpty
+                        ? GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text('Please choose'),
+                                    actions: [
+                                      IconButton(
+                                        onPressed: () {
+                                          context
+                                              .read<ProductController>()
+                                              .getImageCamera();
+                                        },
+                                        icon: Icon(Icons.photo_camera),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          context
+                                              .read<ProductController>()
+                                              .getImageGallery();
+                                        },
+                                        icon: Icon(Icons.photo_album),
+                                      )
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/image/click.gif',
+                              height: 150,
+                              width: double.infinity,
+                            ),
+                          )
+                        : Container(
+                            width: double.infinity,
+                            height: 250,
+                            child: Image.file(
+                              File(
+                                  '${context.watch<ProductController>().imagePath}'),
+                              fit: BoxFit.cover,
+                            )),
                     32.verticalSpace,
                     CustomTextFrom(
                       controller: nameTextEditController,
                       label: "name",
                       hintext: '',
+                    ),
+                    Text(
+                      "Bu yerni to'ldiring",
+                      style: TextStyle(color: Colors.red, fontSize: 25),
                     ),
                     32.verticalSpace,
                     CustomTextFrom(
@@ -55,12 +107,20 @@ class _AddProductPageState extends State<AddProductPage> {
                       label: "desc",
                       hintext: '',
                     ),
+                    Text(
+                      "Bu yerni to'ldiring",
+                      style: TextStyle(color: Colors.red, fontSize: 25),
+                    ),
                     32.verticalSpace,
                     CustomTextFrom(
                       controller: priceTextEditController,
                       label: "price",
                       keyboardType: TextInputType.number,
                       hintext: '',
+                    ),
+                    Text(
+                      "Bu yerni to'ldiring",
+                      style: TextStyle(color: Colors.red, fontSize: 25),
                     ),
                     32.verticalSpace,
                     DropdownButtonFormField(
@@ -146,10 +206,30 @@ class _AddProductPageState extends State<AddProductPage> {
                     32.verticalSpace,
                     ElevatedButton(
                         onPressed: () {
-                          context.read<ProductController>().createProduct(
-                              name: nameTextEditController.text,
-                              desc: descTextEditController.text,
-                              price: priceTextEditController.text);
+                          if (nameTextEditController.text.isNotEmpty) {
+                            if (descTextEditController.text.isNotEmpty) {
+                              if (priceTextEditController.text.isNotEmpty) {
+                                context.read<ProductController>().createProduct(
+                                    name: nameTextEditController.text,
+                                    desc: descTextEditController.text,
+                                    price: priceTextEditController.text);
+                                nameTextEditController.clear();
+                                descTextEditController.clear();
+                                priceTextEditController.clear();
+                                isnotempty = false;
+                                setState(() {});
+                              } else {
+                                isnotempty = true;
+                                setState(() {});
+                              }
+                            } else {
+                              isnotempty = true;
+                              setState(() {});
+                            }
+                          } else {
+                            isnotempty = true;
+                            setState(() {});
+                          }
                         },
                         child: context.watch<ProductController>().isSaveLoading
                             ? const CircularProgressIndicator(
