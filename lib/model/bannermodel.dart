@@ -1,6 +1,5 @@
 import 'package:jabikfoodyapp/model/product_model.dart';
 
-
 class BannerModel {
   final String title;
   final ProductModel product;
@@ -10,6 +9,7 @@ class BannerModel {
   factory BannerModel.fromJson(
       {required Map<String, dynamic> data, required Map? dataProduct}) {
     return BannerModel(
-        title: data["title"], product: ProductModel.fromJson(dataProduct!));
+        title: data["title"],
+        product: ProductModel.fromJson(dataProduct, false));
   }
 }

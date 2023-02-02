@@ -37,7 +37,7 @@ class UserModel {
         email: data?["email"],
         gender: data?["gender"],
         phone: data?["phone"],
-        likes: data?["likes"],
+        likes: data?["array"],
         address: data?["address"] != null
             ? AddressModel.fromJson(data?["address"])
             : null);
@@ -55,7 +55,7 @@ class UserModel {
       "gender": gender,
       "phone": phone,
       if (likes != null)
-        "likes": List<dynamic>.from(likes!.map((x) => x.toJson())),
+        "array": List<dynamic>.from(likes!.map((x) => x.toJson())),
       "address": address?.toJson()
     };
   }

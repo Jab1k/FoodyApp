@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jabikfoodyapp/view/pages/home/productpage.dart';
 
 import '../../style/style.dart';
 import '../home/general_page.dart';
@@ -22,7 +23,7 @@ class GeneralPage extends StatefulWidget {
 class _GeneralPageState extends State<GeneralPage> {
   List<Widget> mainPages = [
     const HomePage(),
-    const Placeholder(),
+    const ProductListPage(),
     const AddProductPage(),
     const Placeholder(),
     const Placeholder(),
