@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jabikfoodyapp/controller/chat_controller.dart';
 import 'package:jabikfoodyapp/view/pages/auth/splash_screen.dart';
+import 'package:jabikfoodyapp/view/pages/home/home_page.dart';
 import 'package:jabikfoodyapp/view/pages/home/productpage.dart';
 import 'package:provider/provider.dart';
 
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthController()),
+        ChangeNotifierProvider(create: (context) => ChatController()),
         ChangeNotifierProvider(create: (context) => UserController()),
         ChangeNotifierProvider(create: (context) => ProductController()),
         ChangeNotifierProvider(create: (context) => HomeController()),

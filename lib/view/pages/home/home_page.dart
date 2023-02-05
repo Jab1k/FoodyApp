@@ -226,30 +226,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 24),
-                                child: Text('Popular Menu',
-                                    style: Style.textStyleRegular(size: 20)),
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 24),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // Navigator.of(context).push(
-                                    //     MaterialPageRoute(
-                                    //         builder: ((context) =>
-                                    //             PopMenuPage())));
-                                  },
-                                  child: Text('See all',
-                                      style: Style.textStyleRegular2(
-                                          textColor: Style.primaryColor)),
-                                ),
-                              ),
-                            ],
-                          ),
                           32.verticalSpace,
                           MenuListView()
                         ],

@@ -23,22 +23,22 @@ class HomeController extends ChangeNotifier {
 
   getUser() async {
     String? docId = await LocalStore.getDocId();
-    var res = await firestore.collection("users").doc(docId).get();
+    var res =
+    await firestore.collection("users").doc(docId).get();
     user = UserModel.fromJson(res.data());
   }
 
   changeLike(int index) async {
     listOfProduct[index].isLike = !listOfProduct[index].isLike;
     List addDocIdList = [];
-    for (int i = 0; i < listOfProduct.length; i++) {
-      if (listOfProduct[i].isLike) {
+    for (int i=0;i<listOfProduct.length;i++) {
+      if(listOfProduct[i].isLike){
         addDocIdList.add(listOfProductDocId[i]);
       }
     }
-    firestore
-        .collection("users")
-        .doc(await LocalStore.getDocId())
-        .update({"array": List<dynamic>.from(addDocIdList.map((e) => e))});
+    firestore.collection("users").doc(await LocalStore.getDocId()).update({
+      "array": List<dynamic>.from(addDocIdList.map((e) => e))
+    });
     notifyListeners();
   }
 
@@ -55,8 +55,7 @@ class HomeController extends ChangeNotifier {
       listOfProduct.clear();
       listOfProductDocId.clear();
       for (var element in res.docs) {
-        listOfProduct.add(ProductModel.fromJson(
-            element.data(), user?.likes?.contains(element.id)));
+        listOfProduct.add(ProductModel.fromJson(element.data(),user?.likes?.contains(element.id)));
         listOfProductDocId.add(element.id);
       }
     }
@@ -129,8 +128,7 @@ class HomeController extends ChangeNotifier {
     listOfProduct.clear();
     listOfProductDocId.clear();
     for (var element in res.docs) {
-      listOfProduct.add(ProductModel.fromJson(
-          element.data(), user?.likes?.contains(element.id)));
+      listOfProduct.add(ProductModel.fromJson(element.data(),user?.likes?.contains(element.id)));
       listOfProductDocId.add(element.id);
     }
     _isProductLoading = false;

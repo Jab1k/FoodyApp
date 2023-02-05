@@ -72,10 +72,14 @@ class _ProductListPageState extends State<ProductListPage> {
               : Container(
                   margin: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: Colors.pinkAccent,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.pinkAccent),
-                  ),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 50,
+                            offset: const Offset(0, 6),
+                            color: const Color(0xff5A6CEA).withOpacity(0.08))
+                      ],
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      color: Colors.white),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                   child:
@@ -93,12 +97,16 @@ class _ProductListPageState extends State<ProductListPage> {
                           child: Container(
                             margin: const EdgeInsets.all(6),
                             decoration: BoxDecoration(
-                              color: state.selectIndex == i
-                                  ? Colors.pinkAccent
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(24),
-                              border: Border.all(color: Colors.pinkAccent),
-                            ),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 50,
+                                      offset: const Offset(0, 6),
+                                      color: const Color(0xff5A6CEA)
+                                          .withOpacity(0.08))
+                                ],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(16)),
+                                color: Colors.white),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 6),
                             child: Text(state.listOfCategory[i].name ?? ""),
