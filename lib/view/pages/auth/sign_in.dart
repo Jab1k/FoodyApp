@@ -74,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: CustomTextFrom(
-                onchange: (value) {
+                onChange: (value) {
                   isPhoneEmpty = false;
                   setState(() {});
                 },
@@ -109,7 +109,7 @@ class _SignInPageState extends State<SignInPage> {
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
               child: CustomTextFrom(
-                onchange: (value) {
+                onChange: (value) {
                   isPasswordEmpty = false;
                   setState(() {});
                 },

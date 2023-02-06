@@ -8,22 +8,24 @@ class CustomTextFrom extends StatelessWidget {
   final String label;
   final TextInputType keyboardType;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final bool isObscure;
   final FocusNode? node;
-  final String? hintext;
-  final ValueChanged<String>? onchange;
+  final hintext;
+  final ValueChanged<String>? onChange;
 
-  const CustomTextFrom({
-    Key? key,
-    required this.controller,
-    required this.label,
-    this.keyboardType = TextInputType.text,
-    this.isObscure = false,
-    this.onchange,
-    this.suffixIcon,
-    this.node,
-    this.hintext,
-  }) : super(key: key);
+  const CustomTextFrom(
+      {Key? key,
+      required this.controller,
+      required this.label,
+      this.keyboardType = TextInputType.text,
+      this.isObscure = false,
+      this.onChange,
+      this.suffixIcon,
+      this.node,
+      this.prefixIcon,
+      this.hintext})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +35,14 @@ class CustomTextFrom extends StatelessWidget {
       focusNode: node,
       obscureText:
           isObscure ? (context.watch<AppController>().isVisibility) : false,
-      onChanged: onchange,
+      onChanged: onChange,
       decoration: InputDecoration(
+          hintText: hintext,
           labelText: label,
           border: OutlineInputBorder(),
           enabledBorder: OutlineInputBorder(),
           focusedBorder: OutlineInputBorder(),
+          prefixIcon: prefixIcon,
           suffixIcon: suffixIcon ??
               (isObscure
                   ? IconButton(

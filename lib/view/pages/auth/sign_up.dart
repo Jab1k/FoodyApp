@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: CustomTextFrom(
-                onchange: (value) {
+                onChange: (value) {
                   isPhoneEmpty = false;
                   setState(() {});
                 },

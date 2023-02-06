@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-
 class CustomImageNetwork extends StatelessWidget {
   final String? image;
   final double height;
@@ -18,9 +17,13 @@ class CustomImageNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: height,
       width: width,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.pinkAccent),
+        borderRadius: BorderRadius.circular(radius),
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(radius),
         child: CachedNetworkImage(
@@ -28,14 +31,27 @@ class CustomImageNetwork extends StatelessWidget {
           imageUrl: image ?? "",
           progressIndicatorBuilder: (context, text, DownloadProgress value) {
             return Container(
+              height: height,
+              width: width,
               decoration: BoxDecoration(
-                color:Colors.grey,
-                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.pinkAccent),
+                color: Colors.grey.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(radius),
               ),
+              child:
+                  Center(child: Text(((value.progress ?? 1) * 100).toString())),
             );
           },
           errorWidget: (context, _, __) {
-            return const Icon(Icons.error);
+            return Container(
+                height: height,
+                width: width,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.pinkAccent),
+                  borderRadius: BorderRadius.circular(radius),
+                ),
+                child: const Center(child: Icon(Icons.error)));
           },
         ),
       ),

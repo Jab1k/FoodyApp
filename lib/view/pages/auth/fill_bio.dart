@@ -105,7 +105,7 @@ class _FillBioPageState extends State<FillBioPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
-                  onchange: (value) {
+                  onChange: (value) {
                     isFullNameEmpty = false;
                     setState(() {});
                   },
@@ -132,7 +132,7 @@ class _FillBioPageState extends State<FillBioPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
-                  onchange: (value) {
+                  onChange: (value) {
                     isNickNameEmpty = false;
                     setState(() {});
                   },
@@ -157,7 +157,7 @@ class _FillBioPageState extends State<FillBioPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
-                  onchange: (value) {
+                  onChange: (value) {
                     isPhoneNumberEmpty = false;
                     setState(() {});
                   },
@@ -243,7 +243,7 @@ class _FillBioPageState extends State<FillBioPage> {
               Padding(
                 padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
                 child: CustomTextFrom(
-                  onchange: (value) {
+                  onChange: (value) {
                     isPasswEmty = false;
                     setState(() {});
                   },

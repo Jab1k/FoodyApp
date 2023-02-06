@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controller/chat_controller.dart';
 import '../../../model/user_model.dart';
+import '../../components/cached_network_image.dart';
+import '../../components/costum_video.dart';
 import '../../components/custom_textform.dart';
 import '../../components/disskeybord.dart';
+import '../../components/messegitem.dart';
 
 class MessagePage extends StatefulWidget {
   final String docId;
@@ -40,7 +43,6 @@ class _MessagePageState extends State<MessagePage> {
     return OnUnFocusTap(
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: false,
           title: Row(
             children: [
               widget.user.avatar == null
@@ -53,11 +55,7 @@ class _MessagePageState extends State<MessagePage> {
                         fit: BoxFit.cover,
                       ),
                     ),
-              16.horizontalSpace,
-              Text(
-                widget.user.name ?? "",
-                style: TextStyle(color: Colors.black, fontSize: 15),
-              ),
+              Text(widget.user.name ?? ""),
             ],
           ),
         ),
@@ -66,85 +64,104 @@ class _MessagePageState extends State<MessagePage> {
             : ListView.builder(
                 padding: EdgeInsets.all(24),
                 reverse: true,
-                itemCount: state.messages.length,
+                itemCount: state.isUploading
+                    ? state.messages.length + 1
+                    : state.messages.length,
                 itemBuilder: (context, index) {
-                  return FocusedMenuHolder(
-                    blurSize: 10,
-                    duration: Duration(milliseconds: 300),
-                    onPressed: () {},
-                    menuItems: state.messages[index].ownerId == state.userId
-                        ? [
-                            FocusedMenuItem(
-                                title: Text("Edit"),
-                                onPressed: () {
-                                  message.text = state.messages[index].title;
-                                  FocusScope.of(context).autofocus(messageNode);
-                                  event.changeEditText(
-                                      messId: state.messages[index].messId,
-                                      time: state.messages[index].time,
-                                      oldText: state.messages[index].title);
-                                }),
-                            FocusedMenuItem(
-                                title: const Text("Delete"),
-                                onPressed: () {
-                                  event.deleteMessage(
-                                      chatDocId: widget.docId,
-                                      messDocId: state.messages[index].messId);
-                                }),
-                          ]
-                        : [
-                            FocusedMenuItem(
-                                title: const Text("Delete"),
-                                onPressed: () {
-                                  event.deleteMessage(
-                                      chatDocId: widget.docId,
-                                      messDocId: state.messages[index].messId);
-                                }),
-                          ],
-                    child: Align(
-                      alignment: state.messages[index].ownerId == state.userId
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 12),
-                        decoration: BoxDecoration(
-                          color: state.messages[index].ownerId == state.userId
-                              ? Colors.pinkAccent
-                              : Colors.grey,
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              state.messages[index].title,
-                              style: TextStyle(
-                                  color: state.messages[index].ownerId ==
-                                          state.userId
-                                      ? Colors.white
-                                      : Colors.black),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8, left: 4),
-                              child: Text(
-                                DateFormat("hh:mm")
-                                    .format(state.messages[index].time),
-                                style: TextStyle(
-                                    color: state.messages[index].ownerId ==
-                                            state.userId
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontSize: 10),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  return (state.isUploading && (index == 0))
+                      ? Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            color: Colors.grey,
+                          ),
+                        )
+                      : Align(
+                          alignment: state
+                                      .messages[
+                                          state.isUploading ? index - 1 : index]
+                                      .ownerId ==
+                                  state.userId
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: state
+                                      .messages[
+                                          state.isUploading ? index - 1 : index]
+                                      .type ==
+                                  "text"
+                              ? MessageItem(
+                                  isOwner: state
+                                          .messages[state.isUploading
+                                              ? index - 1
+                                              : index]
+                                          .ownerId ==
+                                      state.userId,
+                                  onEdit: () {
+                                    message.text = state
+                                        .messages[state.isUploading
+                                            ? index - 1
+                                            : index]
+                                        .title;
+                                    FocusScope.of(context)
+                                        .autofocus(messageNode);
+                                    event.changeEditText(
+                                        messId: state
+                                            .messages[state.isUploading
+                                                ? index - 1
+                                                : index]
+                                            .messId,
+                                        time: state
+                                            .messages[state.isUploading
+                                                ? index - 1
+                                                : index]
+                                            .time,
+                                        oldText: state
+                                            .messages[state.isUploading
+                                                ? index - 1
+                                                : index]
+                                            .title);
+                                  },
+                                  onDelete: () {
+                                    event.deleteMessage(
+                                        chatDocId: widget.docId,
+                                        messDocId: state
+                                            .messages[state.isUploading
+                                                ? index - 1
+                                                : index]
+                                            .messId);
+                                  },
+                                  message: state.messages[
+                                      state.isUploading ? index - 1 : index],
+                                )
+                              : state
+                                          .messages[state.isUploading
+                                              ? index - 1
+                                              : index]
+                                          .type ==
+                                      "image"
+                                  ? Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 12),
+                                      child: CustomImageNetwork(
+                                        image: state
+                                            .messages[state.isUploading
+                                                ? index - 1
+                                                : index]
+                                            .title,
+                                        height: 100,
+                                        width: 100,
+                                        radius: 16,
+                                      ),
+                                    )
+                                  : CustomVideo(
+                                      videoUrl: state
+                                          .messages[state.isUploading
+                                              ? index - 1
+                                              : index]
+                                          .title,
+                                    ),
+                        );
                 }),
         bottomNavigationBar: Container(
           padding:
@@ -156,19 +173,38 @@ class _MessagePageState extends State<MessagePage> {
             node: messageNode,
             controller: message,
             label: "",
+            prefixIcon: Container(
+              color: Colors.transparent,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      event.getImageGallery(widget.docId);
+                    },
+                    icon: const Icon(
+                      Icons.image,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      event.getVideoGallery(widget.docId);
+                    },
+                    icon: const Icon(Icons.video_library),
+                  ),
+                ],
+              ),
+            ),
             suffixIcon: IconButton(
               onPressed: () {
-                if (message.text.isNotEmpty) {
-                  state.editTime != null
-                      ? event.editMessage(
-                          chatDocId: widget.docId,
-                          messDocId: state.editMessId,
-                          newMessage: message.text,
-                          time: state.editTime ?? DateTime.now())
-                      : event.sendMessage(message.text, widget.docId);
-                } else {
-                  message.clear();
-                }
+                state.editTime != null
+                    ? event.editMessage(
+                        chatDocId: widget.docId,
+                        messDocId: state.editMessId,
+                        newMessage: message.text,
+                        time: state.editTime ?? DateTime.now())
+                    : event.sendMessage(
+                        title: message.text, docId: widget.docId, type: 'text');
                 message.clear();
                 FocusScope.of(context).unfocus();
               },

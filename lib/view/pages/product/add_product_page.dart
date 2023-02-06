@@ -95,7 +95,6 @@ class _AddProductPageState extends State<AddProductPage> {
                     CustomTextFrom(
                       controller: nameTextEditController,
                       label: "name",
-                      hintext: '',
                     ),
                     Text(
                       "Bu yerni to'ldiring",
@@ -105,7 +104,6 @@ class _AddProductPageState extends State<AddProductPage> {
                     CustomTextFrom(
                       controller: descTextEditController,
                       label: "desc",
-                      hintext: '',
                     ),
                     Text(
                       "Bu yerni to'ldiring",
@@ -116,7 +114,6 @@ class _AddProductPageState extends State<AddProductPage> {
                       controller: priceTextEditController,
                       label: "price",
                       keyboardType: TextInputType.number,
-                      hintext: '',
                     ),
                     Text(
                       "Bu yerni to'ldiring",
@@ -156,7 +153,6 @@ class _AddProductPageState extends State<AddProductPage> {
                                   title: CustomTextFrom(
                                     label: "New Category",
                                     controller: newCategoryTextEditController,
-                                    hintext: '',
                                   ),
                                   actions: [
                                     ElevatedButton(

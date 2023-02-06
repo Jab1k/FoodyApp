@@ -45,8 +45,7 @@ class _ProductListPageState extends State<ProductListPage> {
                   child: CustomTextFrom(
                     controller: search,
                     label: "Search",
-                    onchange: (s) {},
-                    hintext: '',
+                    onChange: (s) {},
                   ),
                 ),
                 IconButton(

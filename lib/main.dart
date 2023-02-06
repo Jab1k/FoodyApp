@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jabikfoodyapp/controller/chat_controller.dart';
 import 'package:jabikfoodyapp/view/pages/auth/splash_screen.dart';
-import 'package:jabikfoodyapp/view/pages/home/home_page.dart';
-import 'package:jabikfoodyapp/view/pages/home/productpage.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/app_controller.dart';
@@ -40,6 +38,7 @@ class MyApp extends StatelessWidget {
           splitScreenMode: true,
           builder: (context, child) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 useMaterial3: true,
               ),

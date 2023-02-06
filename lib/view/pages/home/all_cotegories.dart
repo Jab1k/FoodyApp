@@ -39,10 +39,9 @@ class _CategoryPageState extends State<CategoryPage> {
           CustomTextFrom(
             controller: search,
             label: "Search",
-            onchange: (s) {
+            onChange: (s) {
               event.searchCategory(s);
             },
-            hintext: '',
           ),
           Expanded(
             child: GridView.builder(
